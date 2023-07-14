@@ -1,0 +1,43 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  font-family: 'Teko', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.slide:hover,
+.slide:focus {
+  box-shadow: inset 6.5em 0 0 0 var(--hover);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.calenderInput .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 10px 8px !important;
+}
+.calenderInput .MuiOutlinedInput-notchedOutline{
+  border: none !important;
+  height: 40px;
+}
+.calenderInput .MuiStack-root{
+  padding: 0px
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
