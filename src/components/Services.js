@@ -1,18 +1,80 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import bg from "../assets/img_3.jpg";
-import { servicesData } from "../data/localData";
+// import { servicesData } from "../data/localData";
 import H1 from "./reusable/H1";
 import WithBarTitle from "./reusable/WithBarTitle";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import AddServices from "../components/popUps/AddServices";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { deletePackage, getAllPackages } from "../Services/GymApi.services"
+import { CgGym } from "react-icons/cg";
+
 
 export default function Services() {
   const [addServiceModal, setAddServiceModal] = useState(false);
+  const [servicesData, setServicesData] = useState([])
   const modalClose = () => {
     setAddServiceModal(false);
   };
+
+  const getAllPackagesFn = () => {
+    getAllPackages().then((res) => {
+      let Data = []
+      res?.data?.map((item) => {
+        let itemData = {
+          id: item.id,
+          title: item.package_name,
+          icon: <CgGym />,
+          description: item.package_tenure,
+        }
+       return Data.push(itemData)
+      })
+      setServicesData(Data)
+    })
+  }
+
+  const deleteSelectedPackage = (id) => {
+    deletePackage(id)
+    getAllPackagesFn()
+  }
+
+  useEffect(() => {
+    getAllPackagesFn()
+  }, [])
+
+  function Card({ item }) {
+    return (
+      <MyCard>
+        <Icon>{item.icon}</Icon>
+        <Title>{item.title}</Title>
+        <Description>{item.description}</Description>
+        <Button
+          variant="outlined"
+          startIcon={<DeleteOutlineIcon />}
+          sx={{
+            background: "#ff0000",
+            border: "1px solid #ff0000",
+            height: "30px",
+            marginTop: "10px",
+            color: "white",
+            "&:hover": {
+              color: "#ff0000",
+              fontWeight: 600,
+              border: "1px solid #ff0000",
+              background: "none",
+              backdropFilter: "blur(30px)",
+            },
+          }}
+          onClick={() => deleteSelectedPackage(item.id)}
+        >
+          Delete
+        </Button>
+      </MyCard>
+    );
+  }
+
   return (
     <Container>
       <InnerContainer>
@@ -61,15 +123,6 @@ export default function Services() {
   );
 }
 
-export function Card({ item }) {
-  return (
-    <MyCard>
-      <Icon>{item.icon}</Icon>
-      <Title>{item.title}</Title>
-      <Description>{item.description}</Description>
-    </MyCard>
-  );
-}
 
 const Container = styled.div`
   width: 100%;
@@ -105,10 +158,12 @@ const Header = styled.div`
 
 const Cards = styled.div`
   display: flex;
+   flex-wrap: wrap;
+   gap : 20px;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
   margin-top: 50px;
+  margin-bottom: 50px;
 `;
 
 const MyCard = styled.div`

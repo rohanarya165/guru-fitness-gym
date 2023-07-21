@@ -41,7 +41,7 @@ const AddServices = (props) => {
   };
 
   useEffect(() => {
-   
+
   }, []);
 
   const contactNumberHandler = (e) => {
@@ -53,8 +53,9 @@ const AddServices = (props) => {
   };
 
   const submitButtonClicked = () => {
-console.log("api called")
-AddNewServices(formatData)
+    AddNewServices(formatData)
+    onClose()
+    window.location.reload()
   }
   return (
     <div>
@@ -88,7 +89,7 @@ AddNewServices(formatData)
                     <Select
                       // value={age}
                       defaultValue={1}
-                      onChange={() => {}}
+                      onChange={() => { }}
                       displayEmpty
                       // inputProps={{ "aria-label": "Without label" }}
                       sx={{ background: "white", height: "40px" }}
