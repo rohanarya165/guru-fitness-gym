@@ -20,7 +20,7 @@ export default function Services() {
   };
 
   const getAllPackagesFn = () => {
-    getAllPackages().then((res) => {
+  return  getAllPackages().then((res) => {
       let Data = []
       res?.data?.map((item) => {
         let itemData = {
@@ -31,13 +31,13 @@ export default function Services() {
         }
        return Data.push(itemData)
       })
-      setServicesData(Data)
+     return setServicesData(Data)
     })
   }
 
   const deleteSelectedPackage = (id) => {
-    deletePackage(id)
-    getAllPackagesFn()
+    deletePackage(id)   
+    setTimeout(getAllPackagesFn(), 1000)
   }
 
   useEffect(() => {

@@ -32,25 +32,27 @@ const style = {
 
 const AddServices = (props) => {
   const { open, onClose } = props;
-  const [contactNumber, setContactNumber] = React.useState();
+  const [packageName, setPackageName] = React.useState();
+  const [packageTenure, setPackageTenure] = React.useState("MONTHLY");
+  const [packagePrice, setPackagePrice] = React.useState();
 
   const formatData = {
-    package_name: "package 1",
-    package_tenure: "MONTHLY",
-    package_price: 1000.1,
+    package_name: packageName,
+    package_tenure: packageTenure,
+    package_price: packagePrice,
   };
 
-  useEffect(() => {
-
-  }, []);
-
-  const contactNumberHandler = (e) => {
+  const packagePriceHandler = (e) => {
     if (e.target.value.length < 10) {
-      setContactNumber(e.target.value);
+      setPackagePrice(e.target.value);
     } else {
       return false;
     }
   };
+
+  const nameHanldlerFn = (e) => {
+    setPackageName(e.target.value)
+  }
 
   const submitButtonClicked = () => {
     AddNewServices(formatData)
@@ -79,6 +81,7 @@ const AddServices = (props) => {
                   <input
                     className="w-full p-2 rounded"
                     placeholder="Enter package name here"
+                    onChange={nameHanldlerFn}
                   ></input>
                 </div>
                 <div className="text-[white] text-[20px] flex items-center">
@@ -88,15 +91,18 @@ const AddServices = (props) => {
                   <FormControl sx={{ width: "100%" }}>
                     <Select
                       // value={age}
-                      defaultValue={1}
-                      onChange={() => { }}
+                      defaultValue={packageTenure}
+                      onChange={(e) => {
+                        setPackageTenure(e.target.value)
+                       }}
                       displayEmpty
                       // inputProps={{ "aria-label": "Without label" }}
                       sx={{ background: "white", height: "40px" }}
                     >
-                      <MenuItem value={1}>3 months</MenuItem>
-                      <MenuItem value={2}>6 months</MenuItem>
-                      <MenuItem value={3}>12 months</MenuItem>
+                      <MenuItem value={"MONTHLY"}>Monthly</MenuItem>
+                      <MenuItem value={"QUARTERLY"}>Quarterly</MenuItem>
+                      <MenuItem value={"HALFYEARLY"}>Half Yearly</MenuItem>
+                      <MenuItem value={"YEARLY"}>Yearly</MenuItem>
                     </Select>
                   </FormControl>
                 </div>
@@ -108,8 +114,8 @@ const AddServices = (props) => {
                     className="w-full p-2 rounded"
                     placeholder="Enter Price here"
                     type="number"
-                    value={contactNumber}
-                    onChange={contactNumberHandler}
+                    value={packagePrice}
+                    onChange={packagePriceHandler}
                   ></input>
                 </div>
               </div>
