@@ -31,13 +31,14 @@ export default function Services() {
         }
        return Data.push(itemData)
       })
-     return setServicesData(Data)
+      setServicesData(Data)
     })
   }
 
   const deleteSelectedPackage = (id) => {
-    deletePackage(id)   
-    setTimeout(getAllPackagesFn(), 1000)
+    deletePackage(id).then((res)=>{
+      getAllPackagesFn()
+    })  
   }
 
   useEffect(() => {

@@ -12,6 +12,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DemoContainer, DemoItem } from "@mui/x-date-pickers/internals/demo";
 import dayjs from "dayjs";
 import React from "react";
+import {getAllPackages , addNewUser} from "../../Services/GymApi.services"
 
 const style = {
   position: "absolute",
@@ -30,6 +31,29 @@ const style = {
 const BecomeMember = (props) => {
   const { open, onClose } = props;
   const [contactNumber, setContactNumber] = React.useState();
+  const [packageData, setPackageData] = React.useState();
+  const [selectedPackageID, setSelectedPackageID] = React.useState();
+  const [firstName, setFirstName] = React.useState();
+  const [lastName, setLastName] = React.useState();
+
+  React.useEffect(()=>{
+    getAllPackagesFn()
+  },[])
+
+  const getAllPackagesFn = () => {
+    return  getAllPackages().then((res) => {
+        let Data = []
+        res?.data?.map((item) => {
+          let itemData = {
+            id: item.id,
+            title: item.package_name,
+            description: item.package_tenure,
+          }
+         return Data.push(itemData)
+        })
+        setPackageData(Data)
+      })
+    }
 
   const contactNumberHandler = (e) => {
     if (e.target.value.length < 10) {
@@ -38,6 +62,16 @@ const BecomeMember = (props) => {
       return false;
     }
   };
+
+  const submitData = () => {
+    const reqData = {
+      "first_name" : firstName,
+      "last_name" : lastName,
+      "phone_number" :contactNumber.toString(),
+      "package_id" : selectedPackageID.toString()
+  }
+  addNewUser(reqData).then((res)=> {onClose()})
+  }
   return (
     <div>
       <Modal
@@ -60,6 +94,7 @@ const BecomeMember = (props) => {
                   <input
                     className="w-full p-2 rounded"
                     placeholder="Enter name here"
+                    onChange={(e) => setFirstName(e.target.value)}
                   ></input>
                 </div>
                 <div className="text-[white] text-[20px] flex items-center">
@@ -69,6 +104,7 @@ const BecomeMember = (props) => {
                   <input
                     className="w-full p-2 rounded"
                     placeholder="Enter name here"
+                    onChange={(e) => setLastName(e.target.value)}
                   ></input>
                 </div>
                 <div className="text-[white] text-[20px] flex items-center">
@@ -115,16 +151,13 @@ const BecomeMember = (props) => {
                 <div className="col-start-2 col-span-2 ">
                   <FormControl sx={{ width: "100%" }}>
                     <Select
-                      // value={age}
-                      defaultValue={1}
-                      onChange={() => {}}
+                      onChange={(e) => {setSelectedPackageID(e.target.value)}}
                       displayEmpty
-                      // inputProps={{ "aria-label": "Without label" }}
                       sx={{ background: "white", height: "40px" }}
                     >
-                      <MenuItem value={1}>package - 1</MenuItem>
-                      <MenuItem value={2}>package - 2</MenuItem>
-                      <MenuItem value={3}>package - 3</MenuItem>
+                      {packageData?.map((item)=> {
+                        return <MenuItem value={item.id}>{item.title}</MenuItem>
+                      })}
                     </Select>
                   </FormControl>
                 </div>
@@ -148,7 +181,7 @@ const BecomeMember = (props) => {
                 <div>
                   <Button
                     variant="contained"
-                    onClick={onClose}
+                    onClick={submitData}
                     sx={{
                       width: "100%",
                       background: "#ff0000",
