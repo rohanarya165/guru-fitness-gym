@@ -8,14 +8,21 @@ import { FaPlay } from "react-icons/fa";
 import Header from "./Header";
 import BecomeMember from "./popUps/BecomeMember";
 import { Button } from "@mui/material";
+import {userIn} from "../Services/GymApi.services"
 // import myVd from "../assets/vd_1.mp4";
 
 export default function Banner() {
   const [modalOpen, setmodalOpen] = React.useState(false);
+  const [userId, setUserId] = React.useState("");
+
 
   const modalClose = () => {
     setmodalOpen(false);
   };
+
+  const userInHandlerFn = (e) => {setUserId(e.target.value)}
+
+  const checkedInFn = () => {userIn(userId)}
 
   return (
     <Main>
@@ -40,12 +47,13 @@ export default function Banner() {
               <input
                 className="w-full p-2 rounded"
                 placeholder="Enter your id"
+                onChange={userInHandlerFn}
+                type="number"
               ></input>
                 <Button
               onAnimationIteration={"fadeInLeft"}
               variant="contained"
-              onClick={() => {
-              }}
+              onClick={checkedInFn}
               sx={{
                 width: "100%",
                 background: "#12AD2B",

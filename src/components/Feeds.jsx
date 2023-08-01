@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import bg from "../assets/img_9.webp";
-import H1 from "./reusable/H1";
-import H2 from "./reusable/H2";
-import Paragraph from "./reusable/Paragraph";
-import WithBarTitle from "./reusable/WithBarTitle";
 import { Button } from "@mui/material";
+import UserTable from "./userTable/UserTable";
 
 const newFeedData = [
   {
@@ -58,26 +54,28 @@ export default function Feeds() {
           })}
         </div>
         <div className=" drop-shadow-2xl bg-white  p-8 rounded-lg col-span-2">
-            <div className="flex justify-between">
-
-          <p className="text-[#ff0000] text-[30px]">Customer Action</p>
-          <Button
-            variant="outlined"
-            onClick={()=>{}}
-            sx={{
-              width: "200px",
-              color: "#ff0000",
-              border: "1px solid #ff0000",
-              "&:hover": {
-                background: "#ff0000",
-                color: "white",
-                borderColor: "#ff0000",
-              },
-            }}
-          >
-            Upgrade
-          </Button>
-            </div>
+          <div className="flex justify-between">
+            <p className="text-[#ff0000] text-[30px]">Customer Action</p>
+            {/* <Button
+              variant="outlined"
+              onClick={() => {}}
+              sx={{
+                width: "200px",
+                color: "#ff0000",
+                border: "1px solid #ff0000",
+                "&:hover": {
+                  background: "#ff0000",
+                  color: "white",
+                  borderColor: "#ff0000",
+                },
+              }}
+            >
+              Upgrade
+            </Button> */}
+          </div>
+          <div>
+            <UserTable/>
+          </div>
         </div>
       </div>
     </Container>

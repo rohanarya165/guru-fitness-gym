@@ -36,3 +36,18 @@ export function AddNewServices(body) {
     return axios.post(URL, body);
   }
 
+  export function userIn(id) {
+    const URL = API_CONFIG.USER_IN+id ;
+    return axios.post(URL);
+  }
+
+  export function deleteUser(id) {
+    const URL = API_CONFIG.USER_URL+"/"+id ;
+    return axios.delete(URL);
+  }
+
+  export function update(body, id) {
+    const URL = API_CONFIG.USER_URL+"/"+id ;
+        return axios.put(URL, body);
+  }
+
