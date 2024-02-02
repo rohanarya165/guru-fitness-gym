@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export default function WithBarTitle({ title }) {
   return (
-    <Box>
+    <Box >
       <Line />
       <Title>{title}</Title>
     </Box>
@@ -28,5 +28,6 @@ const Line = styled.div`
 const Title = styled.p`
   color: red;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
+  font-size: larger;
 `;

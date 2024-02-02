@@ -16,6 +16,11 @@ export function AddNewServices(body) {
     return axios.delete(URL);
   }
 
+  export function updatePackage(id , body) {
+    const URL = API_CONFIG.POST_PACKAGE+`/${id}`;
+    return axios.put(URL, body);
+  }
+
   export function getAllUsers() {
     const URL = API_CONFIG.USER_URL + `/find-all`;
     return axios.get(URL);
@@ -23,6 +28,10 @@ export function AddNewServices(body) {
 
   export function getAllUsersFeed() {
     const URL = API_CONFIG.USER_URL + `/feed`;
+    return axios.get(URL);
+  }
+  export function getAllUsersActivity() {
+    const URL = API_CONFIG.ACTIVITY + `/activity`;
     return axios.get(URL);
   }
 

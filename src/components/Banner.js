@@ -4,40 +4,50 @@ import bg from "../assets/img_1.jpg";
 // import Button from "./reusable/Button";
 import H1 from "./reusable/H1";
 import WithBarTitle from "./reusable/WithBarTitle";
-import { FaPlay } from "react-icons/fa";
+import Alert from "@mui/material/Alert";
 import Header from "./Header";
 import BecomeMember from "./popUps/BecomeMember";
 import { Button } from "@mui/material";
-import {userIn} from "../Services/GymApi.services"
+import { userIn } from "../Services/GymApi.services";
+import Collapse from "@mui/material/Collapse";
 // import myVd from "../assets/vd_1.mp4";
 
 export default function Banner() {
   const [modalOpen, setmodalOpen] = React.useState(false);
   const [userId, setUserId] = React.useState("");
-
+  const [open, setOpen] = React.useState(true);
 
   const modalClose = () => {
     setmodalOpen(false);
   };
 
-  const userInHandlerFn = (e) => {setUserId(e.target.value)}
+  const userInHandlerFn = (e) => {
+    setUserId(e.target.value);
+  };
 
-  const checkedInFn = () => {userIn(userId)}
+  const checkedInFn = () => {
+    return userIn(userId)
+      .then((res) => {
+        if (res.data === "ok") {
+          alert(`ID no. ${userId} checked in`);
+        }
+      })
+      .catch((res) =>
+        // <Collapse in={open}> <Alert severity="error">{res.response.data.message}</Alert> </Collapse>
+        alert(res.response.data.message)
+      );
+  };
 
   return (
     <Main>
-      {/* <Video poster={bg} autoplay playsinline muted loop>
-        <source
-          src="https://css-tricks-post-videos.s3.us-east-1.amazonaws.com/Island%20-%204141.mp4"
-          type="video/mp4"
-        />
-      </Video> */}
       <Header />
-
       <Container>
         <RightBox>
-          <WithBarTitle title="WITH SHRAVAN MEENA" />
-          <H1>Build Perfect body shape for good and healthy life.</H1>
+          <div className="p-4 mr-8 backdrop-blur-xl rounded-[15px]">
+            <WithBarTitle title="WITH UJJWAL SHARMA" />
+            <H1>Build Perfect body shape for good and healthy life.</H1>
+            <WithBarTitle title="By Vikas Tetwal & Rohan Arya" />
+          </div>
           {/* <Button animation="fadeInLeft">Became a member</Button> */}
         </RightBox>
         <LeftBox>
@@ -50,52 +60,51 @@ export default function Banner() {
                 onChange={userInHandlerFn}
                 type="number"
               ></input>
-                <Button
-              onAnimationIteration={"fadeInLeft"}
-              variant="contained"
-              onClick={checkedInFn}
-              sx={{
-                width: "100%",
-                background: "#12AD2B",
-                border: "1px solid #12AD2B",
-                height: "50px",
-                color: "white",
-                "&:hover": {
-                  color: "#12AD2B",
-                  fontWeight: 600,
+              <Button
+                onAnimationIteration={"fadeInLeft"}
+                variant="contained"
+                onClick={checkedInFn}
+                sx={{
+                  width: "100%",
+                  background: "#12AD2B",
                   border: "1px solid #12AD2B",
-                  background: "none",
-                },
-              }}
-            >
-              Check In
-            </Button>
-           <div className="col-span-2">
-
-            <Button
-              onAnimationIteration={"fadeInLeft"}
-              variant="contained"
-              onClick={() => {
-                setmodalOpen(true);
-              }}
-              sx={{
-                width: "100%",
-                background: "#ff0000",
-                border: "1px solid #ff0000",
-                height: "50px",
-                color: "white",
-                "&:hover": {
-                  color: "#ff0000",
-                  fontWeight: 600,
-                  border: "1px solid #ff0000",
-                  background: "none",
-                  // backdropFilter: "blur(30px)"
-                },
-              }}
-            >
-              Become a Member
-            </Button>
-           </div>
+                  height: "50px",
+                  color: "white",
+                  "&:hover": {
+                    color: "#12AD2B",
+                    fontWeight: 600,
+                    border: "1px solid #12AD2B",
+                    background: "none",
+                  },
+                }}
+              >
+                Check In
+              </Button>
+              <div className="col-span-2">
+                <Button
+                  onAnimationIteration={"fadeInLeft"}
+                  variant="contained"
+                  onClick={() => {
+                    setmodalOpen(true);
+                  }}
+                  sx={{
+                    width: "100%",
+                    background: "#ff0000",
+                    border: "1px solid #ff0000",
+                    height: "50px",
+                    color: "white",
+                    "&:hover": {
+                      color: "#ff0000",
+                      fontWeight: 600,
+                      border: "1px solid #ff0000",
+                      background: "none",
+                      // backdropFilter: "blur(30px)"
+                    },
+                  }}
+                >
+                  Become a Member
+                </Button>
+              </div>
             </div>
           </div>
           {/* <Circle>

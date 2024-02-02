@@ -31,7 +31,7 @@ export default function About() {
           anipurpose layouts. You can select your favorite layouts.
         </Paragraph>
 
-        <Button style={{ marginTop: 30 }}>Became a member</Button>
+        <Button style={{ marginTop: 30 }} onClick={()=> {window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });}}>Became a member</Button>
       </Right>
     </Container>
   );

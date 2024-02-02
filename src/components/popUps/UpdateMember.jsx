@@ -30,7 +30,6 @@ import {
   
   const UpdateMember = (props) => {
     const { open, onClose , formData} = props;
-    console.log( "formData",formData?.phone_number)
     const [contactNumber, setContactNumber] = React.useState(formData?.phone_number);
     const [packageData, setPackageData] = React.useState();
     const [selectedPackageID, setSelectedPackageID] = React.useState(formData?.package_id);
@@ -72,6 +71,7 @@ import {
         "package_id" : selectedPackageID.toString()
     }
     update(reqData,formData.userId).then((res)=> {onClose()})
+    window.location.reload()
     }
     return (
       <div>
@@ -165,41 +165,37 @@ import {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-12 mt-8">
-                  <div>
-                    <Button
-                      variant="outlined"
-                      onClick={onClose}
-                      sx={{
-                        width: "100%",
-                        color: "#ff0000",
-                        border: "1px solid #ff0000",
-                        "&:hover": {    background: "#ff0000",
-                        color: "white",  borderColor: "#ff0000", },
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                  <div>
-                    <Button
-                      variant="contained"
-                      onClick={submitData}
-                      sx={{
-                        width: "100%",
-                        background: "#ff0000",
-                        border: "1px solid #ff0000",
-                        color: "white",
-                        "&:hover": {
-                          color: "#ff0000",
-                          border: "1px solid #ff0000",
-                          background: "none",
-                        },
-                      }}
-                    >
-                      Submit
-                    </Button>
-                  </div>
+                <div>
+                  <Button
+                    variant="outlined"
+                    onClick={onClose}
+                    sx={{
+                      width: "100%",
+                      color: "#ff0000",
+                      border: "1px solid #ff0000",
+                      "&:hover": {    background: "#ff0000",
+                      color: "white",  borderColor: "#ff0000", },
+                    }}
+                  >
+                    Cancel
+                  </Button>
                 </div>
+                <div>
+                  <Button
+                    variant="outlined"
+                    onClick={submitData}
+                    sx={{
+                      width: "100%",
+                      color: "#12AD2B",
+                      border: "1px solid #12AD2B",
+                      "&:hover": {    background: "#12AD2B",
+                      color: "white",  borderColor: "#12AD2B", },
+                    }}
+                  >
+                    Submit
+                  </Button>
+                </div>
+              </div>
               </div>
             </Box>
           </Fade>

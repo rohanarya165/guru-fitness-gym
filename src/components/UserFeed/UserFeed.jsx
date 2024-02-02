@@ -10,14 +10,14 @@ import {
   getAllUsers,
   deleteUser,
   getUserById,
+  getAllUsersActivity
 } from "../../Services/GymApi.services";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditIcon from "@mui/icons-material/Edit";
 import UpdateMember from "../popUps/UpdateMember";
 
-const UserTable = () => {
+const UserFeed = () => {
   const [tableData, setTableData] = React.useState([]);
   const [searchedData, setSearchedData] = React.useState([]);
+  const [activityData, setactivityData] =  React.useState([]);
   const [formData, setformData] = React.useState();
   const [modalOpen, setmodalOpen] = React.useState(false);
   const modalClose = () => {
@@ -28,6 +28,11 @@ const UserTable = () => {
     getAllUsers().then((res) => {
       setTableData(res.data);
       setSearchedData(res.data);
+    });
+  }, []);
+  React.useEffect(() => {
+    getAllUsersActivity().then((res) => {
+        setactivityData(res.data)
     });
   }, []);
 
@@ -65,7 +70,7 @@ const UserTable = () => {
 
   return (
     <div className="overflow-auto h-[380px]">
-      <div className="w-full flex justify-end">
+      {/* <div className="w-full flex justify-end">
         <div className="pb-4">
           <input
             className="w-full p-2 rounded"
@@ -73,17 +78,14 @@ const UserTable = () => {
             onChange={searchedFnHandler}
           ></input>
         </div>
-      </div>
+      </div> */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center">ID</TableCell>
               <TableCell align="center">Name</TableCell>
-              <TableCell align="center">Package</TableCell>
-              <TableCell align="center">EndDate</TableCell>
-              <TableCell align="center">Mob</TableCell>
-              <TableCell align="center">Action</TableCell>
+              <TableCell align="center">Message</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -105,25 +107,7 @@ const UserTable = () => {
                 <TableCell align="center">
                   {item?.package_detail?.package_tenure}
                 </TableCell>
-                <TableCell align="center">{item?.package_end_date}</TableCell>
-                <TableCell align="center">{item?.phone_number}</TableCell>
-                <TableCell align="center">
-                  <div className="flex gap-4">
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => rowClickedFn(item?.id)}
-                    >
-                      <EditIcon />
-                    </div>
-                    <div
-                      className="cursor-pointer"
-                      onClick={() => {deleteFn(item?.id)
-                        window.location.reload()}}
-                    >
-                      <DeleteOutlineIcon />
-                    </div>
-                  </div>
-                </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
@@ -133,4 +117,4 @@ const UserTable = () => {
     </div>
   );
 };
-export default UserTable;
+export default UserFeed;

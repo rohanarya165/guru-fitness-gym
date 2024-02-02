@@ -71,6 +71,7 @@ const BecomeMember = (props) => {
       "package_id" : selectedPackageID.toString()
   }
   addNewUser(reqData).then((res)=> {onClose()})
+  window.location.reload()
   }
   return (
     <div>
@@ -180,18 +181,14 @@ const BecomeMember = (props) => {
                 </div>
                 <div>
                   <Button
-                    variant="contained"
+                    variant="outlined"
                     onClick={submitData}
                     sx={{
                       width: "100%",
-                      background: "#ff0000",
-                      border: "1px solid #ff0000",
-                      color: "white",
-                      "&:hover": {
-                        color: "#ff0000",
-                        border: "1px solid #ff0000",
-                        background: "none",
-                      },
+                      color: "#12AD2B",
+                      border: "1px solid #12AD2B",
+                      "&:hover": {    background: "#12AD2B",
+                      color: "white",  borderColor: "#12AD2B", },
                     }}
                   >
                     Submit

@@ -7,47 +7,65 @@ import WithBarTitle from "./reusable/WithBarTitle";
 import AddIcon from "@mui/icons-material/Add";
 import { Button } from "@mui/material";
 import AddServices from "../components/popUps/AddServices";
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { deletePackage, getAllPackages } from "../Services/GymApi.services"
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { deletePackage, getAllPackages } from "../Services/GymApi.services";
 import { CgGym } from "react-icons/cg";
-
+import EditIcon from "@mui/icons-material/Edit";
+import UpdateServices from "./popUps/UpdateServices";
 
 export default function Services() {
   const [addServiceModal, setAddServiceModal] = useState(false);
-  const [servicesData, setServicesData] = useState([])
+  const [updateServicesModal, setupdateServicesModal] = useState(false);
+  const [servicesData, setServicesData] = useState([]);
+  const [packageData, setpackageData] = useState()
   const modalClose = () => {
     setAddServiceModal(false);
   };
 
+  const updateModalClose = () => {
+    setupdateServicesModal(false);
+  };
+
   const getAllPackagesFn = () => {
-  return  getAllPackages().then((res) => {
-      let Data = []
+    return getAllPackages().then((res) => {
+      let Data = [];
       res?.data?.map((item) => {
         let itemData = {
           id: item.id,
           title: item.package_name,
           icon: <CgGym />,
           description: item.package_tenure,
-        }
-       return Data.push(itemData)
-      })
-      setServicesData(Data)
-    })
-  }
+        };
+        return Data.push(itemData);
+      });
+      setServicesData(Data);
+    });
+  };
 
   const deleteSelectedPackage = (id) => {
-    deletePackage(id).then((res)=>{
-      getAllPackagesFn()
-    })  
-  }
+    deletePackage(id).then((res) => {
+      getAllPackagesFn();
+    });
+  };
 
   useEffect(() => {
-    getAllPackagesFn()
-  }, [])
+    getAllPackagesFn();
+  }, []);
+
+  const cardUpdate = (item) => {
+    setupdateServicesModal(true);
+    setpackageData( item );
+  };
 
   function Card({ item }) {
     return (
-      <MyCard>
+      <MyCard className="relative ">
+        <div
+          className="absolute right-2 top-2 cursor-pointer"
+          onClick={() => cardUpdate(item)}
+        >
+          <EditIcon />
+        </div>
         <Icon>{item.icon}</Icon>
         <Title>{item.title}</Title>
         <Description>{item.description}</Description>
@@ -120,10 +138,10 @@ export default function Services() {
         </Box>
       </InnerContainer>
       <AddServices open={addServiceModal} onClose={modalClose} />
+      <UpdateServices open={updateServicesModal} onClose={updateModalClose} packageData={packageData}/>
     </Container>
   );
 }
-
 
 const Container = styled.div`
   width: 100%;
@@ -159,8 +177,8 @@ const Header = styled.div`
 
 const Cards = styled.div`
   display: flex;
-   flex-wrap: wrap;
-   gap : 20px;
+  flex-wrap: wrap;
+  gap: 20px;
   flex-direction: row;
   align-items: center;
   margin-top: 50px;
@@ -168,8 +186,8 @@ const Cards = styled.div`
 `;
 
 const MyCard = styled.div`
-  width: 30%;
-  height: 300px;
+  width: 23%;
+  height: 252px;
   border-radius: 15px;
   background-color: white;
   display: flex;

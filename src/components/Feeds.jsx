@@ -1,7 +1,8 @@
-import React from "react";
+import * as React from "react";
 import styled from "styled-components";
-import { Button } from "@mui/material";
-import UserTable from "./userTable/UserTable";
+import UserFeed from "./UserFeed/UserFeed";
+import {getAllUsersActivity} from "../Services/GymApi.services"
+import { useEffect , useState } from "react";
 
 const newFeedData = [
   {
@@ -39,6 +40,18 @@ const newFeedData = [
 ];
 
 export default function Feeds() {
+
+const [FeedsData, setFeedsData] = useState([])
+
+
+React.useEffect(() => {
+  getAllUsersActivity().then((res) => {
+    const data = new Set(res.data);
+    console.log("getAllUsersActivity",data)
+  });
+}, []);
+
+
   return (
     <Container>
       <div className="grid grid-cols-3 gap-20 w-full h-full p-20">
@@ -56,25 +69,9 @@ export default function Feeds() {
         <div className=" drop-shadow-2xl bg-white  p-8 rounded-lg col-span-2">
           <div className="flex justify-between">
             <p className="text-[#ff0000] text-[30px]">Customer Action</p>
-            {/* <Button
-              variant="outlined"
-              onClick={() => {}}
-              sx={{
-                width: "200px",
-                color: "#ff0000",
-                border: "1px solid #ff0000",
-                "&:hover": {
-                  background: "#ff0000",
-                  color: "white",
-                  borderColor: "#ff0000",
-                },
-              }}
-            >
-              Upgrade
-            </Button> */}
           </div>
           <div>
-            <UserTable/>
+            <UserFeed/>
           </div>
         </div>
       </div>
